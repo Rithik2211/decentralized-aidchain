@@ -17,7 +17,7 @@ const LoginPage = () => {
 
 
   return (
-    <div className="min-h-screen flex justify-center items-center flex-col p-6">
+    <div className="container px-4 py-8 flex justify-center items-center flex-col mt-[50px]">
       <h1 className="text-4xl font-bold mb-4">Create an account</h1>
       <p className="mb-6 text-gray-600">Enter your email below to create your account</p>
 

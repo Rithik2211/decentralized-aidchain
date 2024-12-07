@@ -28,7 +28,7 @@ const NavBar = () => {
     <nav className="text-white p-4 ">
       <div className="container mx-auto flex justify-between items-center px-7">
         <div className="text-2xl font-bold" onClick={() => handleClick('/')}>
-          EmergencyAid
+          Rescue Chain
         </div>
         <div className="flex flex-row justify-center text-center space-x-7 mx-3">
           {
@@ -45,7 +45,7 @@ const NavBar = () => {
             })
           }
         </div>
-        <NavButton name='Donate With Us!' className='rounded-full px-6 py-2 text-sm font-semibold dark:text-white text-black bg-[#109feb] hover:bg-[#109feb]-500' route='/Login' />
+        <NavButton name='Donate With Us!' className='rounded-full px-6 py-2 text-sm font-semibold dark:text-white text-black bg-[#109feb] hover:bg-[#109feb]-500' route='/screens/loginPage' />
       </div>
     </nav>
   )
