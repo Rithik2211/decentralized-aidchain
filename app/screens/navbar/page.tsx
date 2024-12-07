@@ -1,6 +1,8 @@
-import React from 'react';
+
+import React  from 'react';
 import { useRouter } from 'next/navigation';
 import NavButton from '@/app/utils/NavButton';
+import Image from 'next/image';
 
 
 const NavBar = () => {
@@ -15,21 +17,30 @@ const NavBar = () => {
       route : "/screens/donate"
     },
     {
-      name : "Request Aid",
+      name : "Organizations",
       route : "/screens/dashboard"
     },
     {
-      name : "Volunteer",
-      route : "/screens/verification"
+      name : "Aid Generation",
+      route : "/screens/ReliefGenerationForm"
     }
   ]
 
   return (
     <nav className="text-white p-4 ">
       <div className="container mx-auto flex justify-between items-center px-7">
-        <div className="text-2xl font-bold" onClick={() => handleClick('/')}>
-          EmergencyAid
-        </div>
+      <div className="flex items-center cursor-pointer" onClick={() => handleClick('/')}>
+      <Image
+        src="/Rescue_Chain_trans.png" // Path to your image
+        alt="Rescue Chain Logo" // Alt text for accessibility
+        width={60} // Set the width of the image
+        height={60} // Set the height of the image
+        className="mr-2" // Add margin to the right of the image
+      />
+      <div className="text-2xl font-bold">
+        Rescue Chain
+      </div>
+    </div>
         <div className="flex flex-row justify-center text-center space-x-7 mx-3">
           {
             NavItems?.map((items, index)=>{
