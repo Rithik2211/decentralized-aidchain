@@ -1,4 +1,5 @@
 'use client';
+import { useRouter } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
 
 interface AidProject {
@@ -36,6 +37,10 @@ const DashboardPage: React.FC = () => {
     projectsSupported: 0,
     peopleHelped: 0
   });
+  const router = useRouter()
+  const handleClick = (route: string) => {
+      router.push(route)
+  }
 
   useEffect(() => {
     setAidProjects(mockProjects);
@@ -52,7 +57,7 @@ const DashboardPage: React.FC = () => {
 
   return (
     <div className="container px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6 text-white mx-5">AidChain Dashboard</h1>
+      <h1 className="text-3xl  font-bold mb-6 text-white mx-5">AidChain Dashboard</h1>
       
       {/* Impact Statistics */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 mx-5">
@@ -124,7 +129,7 @@ const DashboardPage: React.FC = () => {
             
             <button 
               className="w-auto bg-blue-600 text-white py-2 px-3 rounded-lg hover:bg-blue-700 transition-colors"
-            >
+            onClick={()=> router.push('./contribute')}>
               Contribute
             </button>
           </div>
