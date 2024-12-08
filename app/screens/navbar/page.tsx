@@ -31,11 +31,11 @@ const NavBar = () => {
       <div className="container mx-auto flex justify-between items-center px-7">
       <div className="flex items-center cursor-pointer" onClick={() => handleClick('/')}>
       <Image
-        src="/Rescue_Chain_trans.png" // Path to your image
-        alt="Rescue Chain Logo" // Alt text for accessibility
-        width={60} // Set the width of the image
-        height={60} // Set the height of the image
-        className="mr-2" // Add margin to the right of the image
+        src="/Rescue_Chain_trans.png"
+        alt="Rescue Chain Logo" 
+        width={60}
+        height={60}
+        className="mr-2"
       />
       <div className="text-2xl font-bold">
         Rescue Chain
@@ -56,7 +56,7 @@ const NavBar = () => {
             })
           }
         </div>
-        <NavButton name='Donate With Us!' className='rounded-full px-6 py-2 text-sm font-semibold dark:text-white text-black bg-[#109feb] hover:bg-[#109feb]-500' route='/Login' />
+        <NavButton name='Donate With Us!' className='rounded-full px-6 py-2 text-sm font-semibold dark:text-white text-black bg-[#109feb] hover:bg-[#109feb]-500' route='/screens/loginPage' />
       </div>
     </nav>
   )

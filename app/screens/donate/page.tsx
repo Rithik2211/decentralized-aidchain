@@ -1,15 +1,8 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
-
-interface AidProject {
-  id: string;
-  name: string;
-  description: string;
-  totalFundingNeeded: number;
-  currentFunding: number;
-  status: 'ongoing' | 'completed' | 'pending';
-}
+import { useReadContract } from 'wagmi';
+import abi from '../../providers/ContractAbi.json';
 
 const mockProjects: AidProject[] = [
   {
@@ -30,6 +23,18 @@ const mockProjects: AidProject[] = [
   }
 ];
 
+interface AidProject {
+  id: string;
+  name: string;
+  description: string;
+  totalFundingNeeded: number;
+  currentFunding: number;
+  status: 'ongoing' | 'completed' | 'pending';
+}
+
+const CONTRACT_ADDRESS: any = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
+const ACCOUNT_ADDRESS: any = process.env.NEXT_PUBLIC_ACCOUNT_ADDRESS;
+
 const DashboardPage: React.FC = () => {
   const [aidProjects, setAidProjects] = useState<AidProject[]>([]);
   const [totalImpact, setTotalImpact] = useState({
@@ -42,14 +47,33 @@ const DashboardPage: React.FC = () => {
       router.push(route)
   }
 
+  const resultData = useReadContract({
+    abi,
+    address: CONTRACT_ADDRESS,
+    functionName: 'getAllAidRequests',
+    args: [CONTRACT_ADDRESS],
+    account: ACCOUNT_ADDRESS,
+  })
+
   useEffect(() => {
     setAidProjects(mockProjects);
     setTotalImpact({
-      fundingRaised: 75000,
-      projectsSupported: mockProjects.length,
-      peopleHelped: 5000
+      fundingRaised: 0,
+      projectsSupported: 0,
+      peopleHelped: 0
     });
   }, []);
+
+  // const contractAidFunction = (contractAidRequests : any) => {
+  //   return contractAidRequests.map((request) => ({
+  //     id: request.id,
+  //     name: request.name,
+  //     description: request.description,
+  //     totalFundingNeeded: request.totalFundingNeeded,
+  //     currentFunding: request.currentFunding,
+  //     status: request.status,
+  //   }));
+  // }
 
   const calculateProgressPercentage = (current: number, total: number) => {
     return (current / total) * 100;

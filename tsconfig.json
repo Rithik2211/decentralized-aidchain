@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/screens/contribute/page.tsx", "app/screens/dashboard/CreateOrganizationForm"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/screens/contribute/page.tsx", "app/screens/dashboard/CreateOrganizationForm", "app/providers/WagmiProvider.js"],
   "exclude": ["node_modules"]
 }

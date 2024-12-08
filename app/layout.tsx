@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Provider from './providers/provider';
+import { WagmiProvider } from "./providers/WagmiProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -23,12 +24,12 @@ export default function RootLayout({ children,}: Readonly<{ children: React.Reac
 
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <WagmiProvider>
         <Provider>
           {children}
         </Provider>
+      </WagmiProvider>
       </body>
     </html>
   );

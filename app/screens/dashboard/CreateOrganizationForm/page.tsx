@@ -1,7 +1,9 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Calendar, DollarSign, FileText } from 'lucide-react';
+import { useReadContract, useWaitForTransactionReceipt, useWriteContract } from 'wagmi';
+import abi from '../../../providers/ContractAbi.json';
 
 const CreateOrganizationForm: React.FC = () => {
     const [title, setTitle] = useState('');
@@ -9,18 +11,92 @@ const CreateOrganizationForm: React.FC = () => {
     const [fundingGoal, setFundingGoal] = useState('');
     const [deadline, setDeadline] = useState('');
     const [category, setCategory] = useState('');
+    const [error, setError] = useState<string | null>(null);
     const router = useRouter();
+    const CONTRACT_ADDRESS: any = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
+    const ACCOUNT_ADDRESS: any = process.env.NEXT_PUBLIC_ACCOUNT_ADDRESS;
+    // const { data: hash, isPending, writeContract  } = useWriteContract();
 
-    const handleSubmit = (e: React.FormEvent) => {
+    // const handleSubmit = (e: React.FormEvent) => {
+    //     e.preventDefault();
+    //     writeContract({
+    //         address: CONTRACT_ADDRESS,
+    //         abi,
+    //         functionName: 'registerOrganization',
+    //         args: [title, description, category],
+    //     })
+    //     console.log("@hello data", { title, description, fundingGoal, deadline, category, hash });
+    // };
+
+    // const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({ hash });
+    // useEffect(() => {
+    //     if (isConfirmed) {
+    //         setTitle('');
+    //         setDescription('');
+    //         setFundingGoal('');
+    //         setCategory('');
+    //         router.push('/screens/dashboard');
+    //     }
+    // }, [isConfirmed]);
+
+    // console.log("Loading..",isConfirming);
+
+    const {  data: hash,  error: writeError,  isPending,  writeContract } = useWriteContract();
+
+    // Transaction Receipt Hook
+    const {  isLoading: isConfirming,  isSuccess: isConfirmed } = useWaitForTransactionReceipt({ 
+        hash,
+        confirmations: 1 
+    });
+
+    useEffect(() => {
+        if (isConfirmed) {
+            setTitle('');
+            setDescription('');
+            setFundingGoal('');
+            setCategory('');
+            console.log('Organization registered successfully');
+            router.push('/screens/dashboard');
+        }
+    }, [isConfirmed, router]);
+
+    // Handle Write Errors
+    useEffect(() => {
+        if (writeError) {
+            setError(writeError.message);
+            console.error('Transaction Error:', writeError);
+        }
+    }, [writeError]);
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Handle form submission logic here
-        console.log({ title, description, fundingGoal, deadline, category });
+        setError(null);
+
+        try {
+            writeContract({
+                address: CONTRACT_ADDRESS,
+                abi,
+                functionName: 'registerOrganization',
+                args: [ title,  description, category ],
+            });
+        } catch (err) {
+            setError('Failed to submit organization');
+            console.error(err);
+        }
     };
+
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 backdrop-blur-sm">
-            <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
-                <h2 className="text-2xl font-bold mb-4 text-black">Create Organization</h2>
+            <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-md relative">
+                <div className='flex flex-col justify-between items-center w-auto'>
+                    <div className='absolute top-4 left-4 text-black' onClick={() => router.push('/screens/dashboard')}>
+                        <ArrowLeft />
+                    </div>
+                    <div>
+                        <h2 className="text-2xl font-bold mb-4 text-black">Create Organization</h2>
+                    </div>
+                </div>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="flex items-center border border-gray-300 rounded-md p-2 text-black">
                         <FileText className="text-black mr-2" />
@@ -57,7 +133,7 @@ const CreateOrganizationForm: React.FC = () => {
                         />
                     </div>
 
-                    <div className="flex items-center border border-gray-300 rounded-md p-2">
+                    {/* <div className="flex items-center border border-gray-300 rounded-md p-2">
                         <Calendar className="text-black mr-2" />
                         <input
                             type="date"
@@ -66,7 +142,7 @@ const CreateOrganizationForm: React.FC = () => {
                             className="w-full outline-none text-black"
                             required
                         />
-                    </div>
+                    </div> */}
 
                     <div className="flex items-center border border-gray-300 rounded-md p-2">
                         <FileText className="text-black mr-2" />
