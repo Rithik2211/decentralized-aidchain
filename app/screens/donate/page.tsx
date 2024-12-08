@@ -1,8 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
-import { useReadContract, useContractWrite, useTransaction } from 'wagmi';
-import { type ReadContractParameters, parseEther } from 'viem';
+import { useReadContract } from 'wagmi';
 import abi from '../../providers/ContractAbi.json';
 
 const mockProjects: AidProject[] = [
@@ -57,7 +56,7 @@ const DashboardPage: React.FC = () => {
   })
 
   useEffect(() => {
-    setAidProjects([]);
+    setAidProjects(mockProjects);
     setTotalImpact({
       fundingRaised: 0,
       projectsSupported: 0,
