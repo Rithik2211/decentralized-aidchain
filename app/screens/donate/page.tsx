@@ -64,17 +64,6 @@ const DashboardPage: React.FC = () => {
     });
   }, []);
 
-  // const contractAidFunction = (contractAidRequests : any) => {
-  //   return contractAidRequests.map((request) => ({
-  //     id: request.id,
-  //     name: request.name,
-  //     description: request.description,
-  //     totalFundingNeeded: request.totalFundingNeeded,
-  //     currentFunding: request.currentFunding,
-  //     status: request.status,
-  //   }));
-  // }
-
   const calculateProgressPercentage = (current: number, total: number) => {
     return (current / total) * 100;
   };
