@@ -71,7 +71,7 @@ const CreateOrganizationForm: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError(null);
-
+        console.log("@@Submit", title,  description, category);
         try {
             writeContract({
                 address: CONTRACT_ADDRESS,

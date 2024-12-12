@@ -48,7 +48,7 @@ const LoginPage = () => {
       {/* Wallet Button Placeholder */}
       <button 
         className="w-full max-w-sm px-4 py-2 border border-gray-300 rounded-md"
-        onClick={() => HandleNavigate('/screens/homepage')}
+        onClick={() => HandleNavigate('/')}
         >
          Connect with Metamask
       </button>
